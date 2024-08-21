@@ -1,0 +1,59 @@
+﻿@model IEnumerable<CipatBarzel.Models.Threat>
+
+@{
+    ViewData["Title"] = "Threat";
+}
+
+<h1>איומים בזמן אמת</h1>
+
+<p>
+    <a asp-action="CreateThreat">צור איום חדש</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+              id
+            </th>
+            <th>
+               סטטוס
+            </th>
+            <th>ארגון טרור</th>
+            <th>סוג טיל</th>
+          
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TerrorOrg.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type.Name)
+                </td>
+            <td>
+                    @if(item.Status == CipatBarzel.Utils.ThreatStatus.inActive)
+                    {
+                        @Html.ActionLink("שגר", "Launch", new { Id = item.Id })
+                    }
+                    else
+                    {
+                        <p>@item.FireTime</p>
+                    }
+
+            </td>
+            <td>
+                    <button onclick="invokeLaunch(@item.Id, @item.ResponceTime,' @($"{item.TerrorOrg.Name}{item.Type.Name}")')">rt Launch </button>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

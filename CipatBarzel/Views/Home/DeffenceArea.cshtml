@@ -1,0 +1,63 @@
+﻿@model IEnumerable<CipatBarzel.Models.Threat>
+
+@{
+    ViewData["Title"] = "DeffenceArea";
+}
+
+<h1>DeffenceArea</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ResponceTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FireTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ResponceTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FireTime)
+            </td>
+                @if (item.Status == CipatBarzel.Utils.ThreatStatus.active)
+                {
+                    <td>
+                        @Html.ActionLink("טמיר", "Intercept", new { tid = item.Id, did = 1 }) |
+                        @Html.ActionLink("קלע דוד", "Intercept", new { tid = item.Id, did = 2 }) ||
+                        @Html.ActionLink("חץ 3", "Intercept", new { tid = item.Id, did = 3 }) ||
+
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        האיום לא בתוקף
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
